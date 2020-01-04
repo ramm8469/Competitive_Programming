@@ -1,0 +1,86 @@
+// @ Author : Ram Mohan Kunwar
+// problem : 2D Array DS
+// Problem Location : https://www.hackerrank.com/challenges/2d-array/problem
+// Solution Video :  https://youtu.be/EgsI45EfsGo 
+// Solution Language : Java
+
+ // Complete the hourglassSum function below.
+    static int hourglassSum(int[][] arr) {
+
+            int [][] CalcHourGlassesSum = new int[4][4];
+            int rs =0,re = 0,cs = 0,ce = 0; // rs = row start, re = row end
+            // cs = column start, ce = column end
+
+            // code for seperating the 16 3*3 matrix out of 6*6 matrix
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4 ; j++) {
+                rs = i;
+                re = i+2;
+                cs = j;
+                ce = j+2;
+                CalcHourGlassesSum[i][j] = sumCalculaed(arr,rs,re,cs,ce);
+             }
+        }
+
+        int maxSumValue = 0;
+
+        // Printing the 4*4 calculated sum result for each 3*3 matrix out of 16
+        for (int i = 0; i <CalcHourGlassesSum.length ; i++) {
+            for (int j = 0; j <CalcHourGlassesSum.length ; j++) {
+                //System.out.print(CalcHourGlassesSum[i][j]+" ");
+
+                // Finding the maximum summed value of each hour glass
+                if (CalcHourGlassesSum[i][j] > maxSumValue){
+                    maxSumValue = CalcHourGlassesSum[i][j];
+                }
+            }
+            //System.out.println();
+        }
+
+
+
+
+
+
+        return maxSumValue;
+    }
+
+    static int sumCalculaed(int [][] arr,int rs,int re,int cs,int ce){
+        int [][] result = new int[3][3];
+        int k = 0,l;
+        int return_val = 0;
+
+        // Seperating a single 3*3 matrix out of 6*6 matrix for 16 such matrices
+
+        for (int i = rs; i <= re ; i++) {
+
+            l = 0;
+            for (int j = cs; j <=  ce; j++) {
+                result[k][l] = arr[i][j];
+                l++;
+            }
+            k++;
+        }
+
+        return_val = hourGlassSumCalculator(result);
+
+        return return_val;
+
+    }
+    static int hourGlassSumCalculator(int hourGlass[][]){
+        int result = 0;
+
+        for (int i = 0; i <hourGlass.length ; i++) {
+            for (int j = 0; j <hourGlass.length ; j++) {
+                if ((i == 1 && j == 0) || (i == 1 && j == 2)){
+                    continue;
+                }
+                else {
+                    result += hourGlass[i][j];
+                }
+            }
+        }
+
+        return result;
+
+    }
